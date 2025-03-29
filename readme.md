@@ -1,4 +1,9 @@
+ gcloud auth application-default login
+ gcloud auth application-default print-access-token
+
 POST https://fcm.googleapis.com/v1/projects/tests-abe52/messages:send
+
+Authorization: Bearer access-token
 
 {
 	"message": {
