@@ -46,6 +46,27 @@
                 getToken(messaging, { vapidKey: "BKRtUcAm22TUABrtJUmfzbNE2SjfvEwobWHGH65uude5B4vFZUUhnALcJt3rKmI2NYYOvbIcTVj91KQsYE1jo_o" })
                     .then((token) => {
                         console.log("📲 Token de FCM:", token);
+
+                        fetch("https://us-central1-tests-abe52.cloudfunctions.net/api/token", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({ token })
+                        })
+                            .then((response) => {
+                                if (!response.ok) {
+                                    throw new Error("Error al enviar el token");
+                                }
+                                return response.json();
+                            })
+                            .then((data) => {
+                                console.log("✅ Token guardado correctamente:", data);
+                            })
+                            .catch((error) => {
+                                console.error("🚨 Error al guardar el token:", error);
+                            });
+
                     })
                     .catch((error) => {
                         console.error("🚨 Error al obtener el token:", error);
